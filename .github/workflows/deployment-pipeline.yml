@@ -89,7 +89,7 @@ jobs:
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
 
-  push:
+  dockerpush:
     needs: anchore_scan_job
     runs-on: ubuntu-latest
 
@@ -108,7 +108,7 @@ jobs:
       run: docker push ${{secrets.DOCKERHUB_USERNAME}}/jenkins01
 
   build:
-    needs: push
+    needs: dockerpush
     runs-on: ubuntu-latest
     steps:
 

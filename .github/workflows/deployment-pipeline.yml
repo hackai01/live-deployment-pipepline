@@ -89,26 +89,8 @@ jobs:
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
 
-  dockerpush:
-    needs: anchore_scan_job
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: docker login
-      env:
-        DOCKERHUBREPO_USER: ${{secrets.DOCKERHUB_USERNAME}}
-        DOCKERHUBREPO_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
-      run: |
-        docker login -u $DOCKERHUBREPO_USERNAME -p $DOCKERHUBREPO_PASSWORD
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag hackai87/jenkins01
-
-    - name: Docker Push
-      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/jenkins01
-
   build:
-    needs: dockerpush
+    needs: anchore_scan_job
     runs-on: ubuntu-latest
     steps:
 

@@ -29,26 +29,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        # Makes sure your .dockleignore file is available to the next step
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      # Here you might use a docker login action, or something else
-      - name: Authenticate to DockHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Authenticate to DockHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Run Dockle
-        uses: erzz/dockle-action@v1
-        id: dockle-report
-        with:
-          image: ${{secrets.DOCKERHUB_USERNAME}}/pre_flight_check
-          report-format: sarif
-          report-name: dockle-report
-          failure-threshold: warn
-          exit-code: 0
-          accept-extensions: pem
+    - name: Run Dockle
+      uses: erzz/dockle-action@v1
+      id: dockle-report
+      with:
+        image: ${{secrets.DOCKERHUB_USERNAME}}/pre_flight_check
+        report-format: sarif
+        report-name: dockle-report
+        failure-threshold: warn
+        exit-code: 0
+        accept-extensions: pem
 
 
   anchore_scan_job:

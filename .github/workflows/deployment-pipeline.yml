@@ -97,10 +97,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: docker login
       env:
-        DOCKERHUB_USER: ${{secrets.DOCKERHUB_USERNAME}}
-        DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+        DOCKERHUBREPO_USER: ${{secrets.DOCKERHUB_USERNAME}}
+        DOCKERHUBREPO_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
       run: |
-        docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+        docker login -u $DOCKERHUBREPO_USERNAME -p $DOCKERHUBREPO_PASSWORD
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag hackai87/jenkins01
 
